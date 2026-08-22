@@ -1,0 +1,234 @@
+:root {
+  --bd-red: #c8102e;
+  --bd-red-dark: #93001f;
+  --bd-white: #ffffff;
+  --bd-gray: #f4f4f4;
+  --bd-text: #1a1a1a;
+  --bd-text-light: #6b6b6b;
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--bd-gray);
+  color: var(--bd-text);
+}
+
+.site-header {
+  background: linear-gradient(135deg, var(--bd-red), var(--bd-red-dark));
+  color: var(--bd-white);
+  padding: 1.5rem 1rem;
+}
+
+.header-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo-badge {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--bd-white);
+  color: var(--bd-red);
+  font-weight: 700;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid var(--bd-white);
+}
+
+.header-text h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.header-text p {
+  margin: 0.2rem 0 0;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+
+.countdown-section {
+  background: var(--bd-white);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  padding: 1.5rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  border-top: 4px solid var(--bd-red);
+}
+
+.countdown-section h2 {
+  margin-top: 0;
+  color: var(--bd-red-dark);
+  font-size: 1.2rem;
+}
+
+.countdown {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin: 1rem 0;
+}
+
+.countdown-box {
+  background: var(--bd-red);
+  color: var(--bd-white);
+  border-radius: 10px;
+  min-width: 72px;
+  padding: 0.75rem 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.countdown-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.countdown-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 0.3rem;
+  opacity: 0.9;
+}
+
+.next-game-info {
+  color: var(--bd-text-light);
+  font-size: 0.95rem;
+  margin: 0.5rem 0 0;
+}
+
+.games-section h2 {
+  color: var(--bd-red-dark);
+  font-size: 1.2rem;
+}
+
+.games-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.game-card {
+  background: var(--bd-white);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  padding: 1.1rem 1.3rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-left: 5px solid var(--bd-red);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.game-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.game-card.is-next {
+  border-left-color: var(--bd-red-dark);
+  background: linear-gradient(90deg, rgba(200, 16, 46, 0.06), var(--bd-white) 20%);
+}
+
+.game-card.is-past {
+  opacity: 0.55;
+}
+
+.game-date {
+  flex-shrink: 0;
+  width: 64px;
+  text-align: center;
+  background: var(--bd-red);
+  color: var(--bd-white);
+  border-radius: 8px;
+  padding: 0.4rem 0.2rem;
+}
+
+.game-date .day {
+  display: block;
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.game-date .month {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.game-details {
+  flex-grow: 1;
+}
+
+.game-opponent {
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin: 0 0 0.25rem;
+}
+
+.game-meta {
+  margin: 0;
+  color: var(--bd-text-light);
+  font-size: 0.9rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.8rem;
+}
+
+.game-badge {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  background: var(--bd-red-dark);
+  color: var(--bd-white);
+  padding: 0.3rem 0.6rem;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.site-footer {
+  text-align: center;
+  color: var(--bd-text-light);
+  font-size: 0.85rem;
+  padding: 1.5rem 1rem 2rem;
+}
+
+@media (max-width: 480px) {
+  .game-card {
+    flex-wrap: wrap;
+  }
+
+  .countdown-box {
+    min-width: 60px;
+    padding: 0.6rem 0.4rem;
+  }
+
+  .countdown-value {
+    font-size: 1.4rem;
+  }
+}

@@ -1,0 +1,106 @@
+// Statische Daten der Heimspiele von Borussia Düsseldorf (TTBL)
+const HOME_GAMES = [
+  { datum: "22.08.2026", uhrzeit: "20:00", gegner: "TSV Bad Königshofen", ort: "Mitsubishi Electric Halle" },
+  { datum: "05.09.2026", uhrzeit: "13:00", gegner: "TTC Schwalbe Bergneustadt", ort: "ARAG CenterCourt" },
+  { datum: "27.09.2026", uhrzeit: "14:00", gegner: "BV Borussia Dortmund", ort: "CASTELLO Düsseldorf" },
+  { datum: "15.11.2026", uhrzeit: "14:00", gegner: "ASC Grünwettersbach", ort: "ARAG CenterCourt" },
+  { datum: "20.12.2026", uhrzeit: "14:00", gegner: "TTF Liebherr Ochsenhausen", ort: "Ort noch offen" }
+];
+
+const MONTH_NAMES = [
+  "Jan", "Feb", "Mär", "Apr", "Mai", "Jun",
+  "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"
+];
+
+const WEEKDAY_NAMES = [
+  "Sonntag", "Montag", "Dienstag", "Mittwoch", "Donnerstag", "Freitag", "Samstag"
+];
+
+function parseGameDate(datum, uhrzeit) {
+  const [day, month, year] = datum.split(".").map(Number);
+  const [hour, minute] = uhrzeit.split(":").map(Number);
+  return new Date(year, month - 1, day, hour, minute);
+}
+
+function buildGames() {
+  return HOME_GAMES
+    .map((game) => ({ ...game, dateObj: parseGameDate(game.datum, game.uhrzeit) }))
+    .sort((a, b) => a.dateObj - b.dateObj);
+}
+
+function renderGames(games) {
+  const container = document.getElementById("games-list");
+  const now = new Date();
+  const nextGame = games.find((g) => g.dateObj >= now);
+
+  container.innerHTML = "";
+
+  games.forEach((game) => {
+    const card = document.createElement("div");
+    card.className = "game-card";
+    if (nextGame && game === nextGame) card.classList.add("is-next");
+    if (game.dateObj < now) card.classList.add("is-past");
+
+    const day = String(game.dateObj.getDate()).padStart(2, "0");
+    const month = MONTH_NAMES[game.dateObj.getMonth()];
+    const weekday = WEEKDAY_NAMES[game.dateObj.getDay()];
+
+    card.innerHTML = `
+      <div class="game-date">
+        <span class="day">${day}</span>
+        <span class="month">${month}</span>
+      </div>
+      <div class="game-details">
+        <p class="game-opponent">Borussia Düsseldorf – ${game.gegner}</p>
+        <p class="game-meta">
+          <span>${weekday}, ${game.datum}</span>
+          <span>${game.uhrzeit} Uhr</span>
+          <span>${game.ort}</span>
+        </p>
+      </div>
+      ${nextGame && game === nextGame ? '<span class="game-badge">Nächstes Spiel</span>' : ""}
+    `;
+
+    container.appendChild(card);
+  });
+}
+
+function updateCountdown(games) {
+  const now = new Date();
+  const nextGame = games.find((g) => g.dateObj >= now);
+
+  const daysEl = document.getElementById("cd-days");
+  const hoursEl = document.getElementById("cd-hours");
+  const minutesEl = document.getElementById("cd-minutes");
+  const secondsEl = document.getElementById("cd-seconds");
+  const infoEl = document.getElementById("next-game-info");
+  const titleEl = document.getElementById("countdown-title");
+
+  if (!nextGame) {
+    titleEl.textContent = "Saison beendet";
+    daysEl.textContent = "--";
+    hoursEl.textContent = "--";
+    minutesEl.textContent = "--";
+    secondsEl.textContent = "--";
+    infoEl.textContent = "Aktuell sind keine weiteren Heimspiele geplant.";
+    return;
+  }
+
+  const diff = nextGame.dateObj - now;
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((diff / (1000 * 60)) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
+
+  daysEl.textContent = String(days);
+  hoursEl.textContent = String(hours).padStart(2, "0");
+  minutesEl.textContent = String(minutes).padStart(2, "0");
+  secondsEl.textContent = String(seconds).padStart(2, "0");
+
+  infoEl.textContent = `gegen ${nextGame.gegner} am ${nextGame.datum} um ${nextGame.uhrzeit} Uhr · ${nextGame.ort}`;
+}
+
+const games = buildGames();
+renderGames(games);
+updateCountdown(games);
+setInterval(() => updateCountdown(games), 1000);
