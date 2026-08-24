@@ -1,4 +1,4 @@
-name: Update TTBL home games
+name: Update TTBL games and table
 
 on:
   schedule:
@@ -23,17 +23,20 @@ jobs:
       - name: Install dependencies
         run: pip install -r scripts/requirements.txt
 
-      - name: Fetch latest home games
+      - name: Fetch latest games
         run: python scripts/fetch_games.py
 
-      - name: Commit and push changes if games.json changed
+      - name: Fetch latest table
+        run: python scripts/fetch_table.py
+
+      - name: Commit and push changes if games.json or table.json changed
         run: |
-          if git diff --quiet -- games.json; then
-            echo "Keine Aenderungen an games.json."
+          if git diff --quiet -- games.json table.json; then
+            echo "Keine Aenderungen an games.json oder table.json."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add games.json
-          git commit -m "chore: update TTBL home games"
+          git add games.json table.json
+          git commit -m "chore: update TTBL games and table"
           git push

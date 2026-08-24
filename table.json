@@ -1,0 +1,110 @@
+[
+  {
+    "platz": 1,
+    "name": "Borussia Düsseldorf",
+    "spiele": 1,
+    "siege": 1,
+    "niederlagen": 0,
+    "punkte": 2,
+    "satzdifferenz": 3
+  },
+  {
+    "platz": 2,
+    "name": "1. FC Saarbrücken-TT",
+    "spiele": 1,
+    "siege": 1,
+    "niederlagen": 0,
+    "punkte": 2,
+    "satzdifferenz": 3
+  },
+  {
+    "platz": 3,
+    "name": "TTC Zugbrücke Grenzau",
+    "spiele": 1,
+    "siege": 1,
+    "niederlagen": 0,
+    "punkte": 2,
+    "satzdifferenz": 1
+  },
+  {
+    "platz": 4,
+    "name": "TTF Liebherr Ochsenhausen",
+    "spiele": 1,
+    "siege": 1,
+    "niederlagen": 0,
+    "punkte": 2,
+    "satzdifferenz": 1
+  },
+  {
+    "platz": 5,
+    "name": "ASC Grünwettersbach",
+    "spiele": 1,
+    "siege": 1,
+    "niederlagen": 0,
+    "punkte": 2,
+    "satzdifferenz": 1
+  },
+  {
+    "platz": 6,
+    "name": "SV Werder Bremen",
+    "spiele": 1,
+    "siege": 1,
+    "niederlagen": 0,
+    "punkte": 2,
+    "satzdifferenz": 1
+  },
+  {
+    "platz": 7,
+    "name": "TTC RhönSprudel Fulda-Maberzell",
+    "spiele": 1,
+    "siege": 0,
+    "niederlagen": 1,
+    "punkte": 0,
+    "satzdifferenz": -1
+  },
+  {
+    "platz": 8,
+    "name": "TSV Bad Königshofen",
+    "spiele": 1,
+    "siege": 0,
+    "niederlagen": 1,
+    "punkte": 0,
+    "satzdifferenz": -1
+  },
+  {
+    "platz": 9,
+    "name": "TTC Schwalbe Bergneustadt",
+    "spiele": 1,
+    "siege": 0,
+    "niederlagen": 1,
+    "punkte": 0,
+    "satzdifferenz": -1
+  },
+  {
+    "platz": 10,
+    "name": "Post SV Mühlhausen",
+    "spiele": 1,
+    "siege": 0,
+    "niederlagen": 1,
+    "punkte": 0,
+    "satzdifferenz": -1
+  },
+  {
+    "platz": 11,
+    "name": "BV Borussia 09 Dortmund",
+    "spiele": 1,
+    "siege": 0,
+    "niederlagen": 1,
+    "punkte": 0,
+    "satzdifferenz": -3
+  },
+  {
+    "platz": 12,
+    "name": "TTC OE Clarity-Tel.Syst.Bad Homburg",
+    "spiele": 1,
+    "siege": 0,
+    "niederlagen": 1,
+    "punkte": 0,
+    "satzdifferenz": -3
+  }
+]

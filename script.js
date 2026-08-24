@@ -1,4 +1,6 @@
 const GAMES_DATA_URL = "games.json";
+const TABLE_DATA_URL = "table.json";
+const OWN_TEAM_NAME = "Borussia Düsseldorf";
 
 const MONTH_NAMES = [
   "Jan", "Feb", "Mär", "Apr", "Mai", "Jun",
@@ -24,6 +26,34 @@ async function loadGames() {
   return rawGames
     .map((game) => ({ ...game, dateObj: parseGameDate(game.datum, game.uhrzeit) }))
     .sort((a, b) => a.dateObj - b.dateObj);
+}
+
+async function loadTable() {
+  const response = await fetch(TABLE_DATA_URL, { cache: "no-store" });
+  if (!response.ok) {
+    throw new Error(`table.json konnte nicht geladen werden (Status ${response.status})`);
+  }
+  const rawTable = await response.json();
+  return rawTable.slice().sort((a, b) => a.platz - b.platz);
+}
+
+function renderTable(table) {
+  const body = document.getElementById("standings-body");
+  body.innerHTML = "";
+
+  table.forEach((team) => {
+    const row = document.createElement("tr");
+    if (team.name === OWN_TEAM_NAME) row.classList.add("is-own-team");
+
+    row.innerHTML = `
+      <td>${team.platz}</td>
+      <td>${team.name}</td>
+      <td>${team.spiele}</td>
+      <td>${team.punkte}</td>
+    `;
+
+    body.appendChild(row);
+  });
 }
 
 function renderGames(games) {
@@ -103,7 +133,7 @@ function updateCountdown(games) {
   infoEl.textContent = `gegen ${nextGame.gegner} am ${nextGame.datum} um ${nextGame.uhrzeit} Uhr · ${nextGame.ort}`;
 }
 
-async function init() {
+async function initGames() {
   try {
     const games = await loadGames();
     renderGames(games);
@@ -117,4 +147,17 @@ async function init() {
   }
 }
 
-init();
+async function initTable() {
+  try {
+    const table = await loadTable();
+    renderTable(table);
+  } catch (error) {
+    console.error(error);
+    document.getElementById("standings-body").innerHTML = "";
+    document.querySelector(".table-scroll").innerHTML =
+      "<p class=\"load-error\">Die Tabelle konnte nicht geladen werden.</p>";
+  }
+}
+
+initGames();
+initTable();
