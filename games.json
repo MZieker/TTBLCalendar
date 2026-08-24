@@ -1,0 +1,32 @@
+[
+  {
+    "datum": "22.08.2026",
+    "uhrzeit": "20:00",
+    "gegner": "TSV Bad Königshofen",
+    "ort": "Mitsubishi Electric Halle"
+  },
+  {
+    "datum": "05.09.2026",
+    "uhrzeit": "13:00",
+    "gegner": "TTC Schwalbe Bergneustadt",
+    "ort": "ARAG CenterCourt"
+  },
+  {
+    "datum": "27.09.2026",
+    "uhrzeit": "14:00",
+    "gegner": "BV Borussia Dortmund",
+    "ort": "CASTELLO Düsseldorf"
+  },
+  {
+    "datum": "15.11.2026",
+    "uhrzeit": "14:00",
+    "gegner": "ASC Grünwettersbach",
+    "ort": "ARAG CenterCourt"
+  },
+  {
+    "datum": "20.12.2026",
+    "uhrzeit": "14:00",
+    "gegner": "TTF Liebherr Ochsenhausen",
+    "ort": "Ort noch offen"
+  }
+]

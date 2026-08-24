@@ -1,11 +1,4 @@
-// Statische Daten der Heimspiele von Borussia Düsseldorf (TTBL)
-const HOME_GAMES = [
-  { datum: "22.08.2026", uhrzeit: "20:00", gegner: "TSV Bad Königshofen", ort: "Mitsubishi Electric Halle" },
-  { datum: "05.09.2026", uhrzeit: "13:00", gegner: "TTC Schwalbe Bergneustadt", ort: "ARAG CenterCourt" },
-  { datum: "27.09.2026", uhrzeit: "14:00", gegner: "BV Borussia Dortmund", ort: "CASTELLO Düsseldorf" },
-  { datum: "15.11.2026", uhrzeit: "14:00", gegner: "ASC Grünwettersbach", ort: "ARAG CenterCourt" },
-  { datum: "20.12.2026", uhrzeit: "14:00", gegner: "TTF Liebherr Ochsenhausen", ort: "Ort noch offen" }
-];
+const GAMES_DATA_URL = "games.json";
 
 const MONTH_NAMES = [
   "Jan", "Feb", "Mär", "Apr", "Mai", "Jun",
@@ -22,8 +15,13 @@ function parseGameDate(datum, uhrzeit) {
   return new Date(year, month - 1, day, hour, minute);
 }
 
-function buildGames() {
-  return HOME_GAMES
+async function loadGames() {
+  const response = await fetch(GAMES_DATA_URL, { cache: "no-store" });
+  if (!response.ok) {
+    throw new Error(`games.json konnte nicht geladen werden (Status ${response.status})`);
+  }
+  const rawGames = await response.json();
+  return rawGames
     .map((game) => ({ ...game, dateObj: parseGameDate(game.datum, game.uhrzeit) }))
     .sort((a, b) => a.dateObj - b.dateObj);
 }
@@ -100,7 +98,18 @@ function updateCountdown(games) {
   infoEl.textContent = `gegen ${nextGame.gegner} am ${nextGame.datum} um ${nextGame.uhrzeit} Uhr · ${nextGame.ort}`;
 }
 
-const games = buildGames();
-renderGames(games);
-updateCountdown(games);
-setInterval(() => updateCountdown(games), 1000);
+async function init() {
+  try {
+    const games = await loadGames();
+    renderGames(games);
+    updateCountdown(games);
+    setInterval(() => updateCountdown(games), 1000);
+  } catch (error) {
+    console.error(error);
+    document.getElementById("games-list").innerHTML =
+      "<p class=\"load-error\">Die Spieldaten konnten nicht geladen werden.</p>";
+    document.getElementById("countdown-title").textContent = "Fehler beim Laden";
+  }
+}
+
+init();
