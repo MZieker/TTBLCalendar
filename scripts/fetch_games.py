@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
-"""Scrapt die TTBL-Heimspiele von Borussia Düsseldorf und schreibt sie nach games.json.
+"""Scrapt die TTBL-Spiele (Heim und Auswaerts) von Borussia Duesseldorf
+und schreibt die noch anstehenden Spiele nach games.json.
 
 Quelle: https://www.borussia-duesseldorf.com/profis/spielplan
 Die Seite enthaelt eine Tabelle (Spalten: Spieltag, Ort, Tag, Datum, Uhrzeit,
 Heim, Gast, Ergebnis, Tickets) unterhalb der Ueberschrift "Tischtennis
 Bundesliga (TTBL) ...". Heimspiele erkennt man daran, dass in der Spalte
-"Ort" der Hallenname steht (statt "auswaerts").
+"Ort" der Hallenname steht (statt "auswaerts") und Borussia Duesseldorf in
+der Spalte "Heim" steht; bei Auswaertsspielen steht Borussia Duesseldorf in
+der Spalte "Gast".
 """
 
 from __future__ import annotations
@@ -13,6 +16,7 @@ from __future__ import annotations
 import json
 import re
 import sys
+from datetime import date
 from pathlib import Path
 
 import requests
@@ -43,7 +47,7 @@ def find_bundesliga_table(soup: BeautifulSoup):
     return soup.find("table", class_="ce-table")
 
 
-def parse_home_games(table) -> list[dict]:
+def parse_games(table) -> list[dict]:
     games = []
     for row in table.find_all("tr"):
         if row.find("b") is not None:
@@ -54,28 +58,35 @@ def parse_home_games(table) -> list[dict]:
             continue
 
         _spieltag, ort, _tag, datum, uhrzeit, heim, gast = cells[:7]
+        heim, gast, ort, datum = heim.strip(), gast.strip(), ort.strip(), datum.strip()
 
-        if ort.strip().lower() == "auswärts":
-            continue  # Auswaertsspiel
-        if TEAM_NAME not in heim:
-            continue  # zur Sicherheit: nur echte Heimspiele
-        if not DATE_PATTERN.match(datum.strip()):
+        if not DATE_PATTERN.match(datum):
             continue
 
-        gegner = gast.strip()
+        if TEAM_NAME in heim:
+            heimspiel = True
+            gegner = gast
+        elif TEAM_NAME in gast:
+            heimspiel = False
+            gegner = heim
+        else:
+            continue  # Zeile betrifft nicht Borussia Duesseldorf
+
         if not gegner:
             continue
 
-        venue = ort.strip()
-        if venue.upper() == "TBD" or not venue:
-            venue = "Ort noch offen"
+        if heimspiel:
+            venue = "Ort noch offen" if ort.upper() == "TBD" or not ort else ort
+        else:
+            venue = "auswärts"
 
         games.append(
             {
-                "datum": datum.strip(),
+                "datum": datum,
                 "uhrzeit": uhrzeit.strip() if TIME_PATTERN.match(uhrzeit.strip()) else "TBD",
                 "gegner": gegner,
                 "ort": venue,
+                "heimspiel": heimspiel,
             }
         )
 
@@ -91,6 +102,11 @@ def sort_key(game: dict):
     return (year, month, day, hour, minute)
 
 
+def is_upcoming(game: dict, today: date) -> bool:
+    day, month, year = (int(part) for part in game["datum"].split("."))
+    return date(year, month, day) >= today
+
+
 def main() -> int:
     html = fetch_html()
     soup = BeautifulSoup(html, "html.parser")
@@ -100,16 +116,23 @@ def main() -> int:
         print("Konnte die Spielplan-Tabelle nicht finden.", file=sys.stderr)
         return 1
 
-    games = sorted(parse_home_games(table), key=sort_key)
+    today = date.today()
+    games = sorted(parse_games(table), key=sort_key)
+    games = [game for game in games if is_upcoming(game, today)]
+
     if not games:
-        print("Keine Heimspiele gefunden, games.json wird nicht veraendert.", file=sys.stderr)
+        print("Keine anstehenden Spiele gefunden, games.json wird nicht veraendert.", file=sys.stderr)
         return 1
 
     OUTPUT_PATH.write_text(
         json.dumps(games, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
-    print(f"{len(games)} Heimspiele gespeichert in {OUTPUT_PATH}")
+    heimspiele = sum(1 for game in games if game["heimspiel"])
+    print(
+        f"{len(games)} anstehende Spiele gespeichert in {OUTPUT_PATH} "
+        f"({heimspiele} Heim, {len(games) - heimspiele} Auswaerts)"
+    )
     return 0
 
 

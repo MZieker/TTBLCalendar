@@ -1,32 +1,65 @@
 [
   {
-    "datum": "22.08.2026",
-    "uhrzeit": "20:00",
-    "gegner": "TSV Bad Königshofen",
-    "ort": "Mitsubishi Electric Halle"
+    "datum": "26.08.2026",
+    "uhrzeit": "18:30",
+    "gegner": "SV Werder Bremen",
+    "ort": "auswärts",
+    "heimspiel": false
   },
   {
     "datum": "05.09.2026",
     "uhrzeit": "13:00",
     "gegner": "TTC Schwalbe Bergneustadt",
-    "ort": "ARAG CenterCourt"
+    "ort": "ARAG CenterCourt",
+    "heimspiel": true
+  },
+  {
+    "datum": "22.09.2026",
+    "uhrzeit": "19:00",
+    "gegner": "Post SV Mühlhausen",
+    "ort": "auswärts",
+    "heimspiel": false
   },
   {
     "datum": "27.09.2026",
     "uhrzeit": "14:00",
     "gegner": "BV Borussia Dortmund",
-    "ort": "CASTELLO Düsseldorf"
+    "ort": "CASTELLO Düsseldorf",
+    "heimspiel": true
+  },
+  {
+    "datum": "09.11.2026",
+    "uhrzeit": "19:00",
+    "gegner": "TTC Zugbrücke Grenzau",
+    "ort": "auswärts",
+    "heimspiel": false
   },
   {
     "datum": "15.11.2026",
     "uhrzeit": "14:00",
     "gegner": "ASC Grünwettersbach",
-    "ort": "ARAG CenterCourt"
+    "ort": "ARAG CenterCourt",
+    "heimspiel": true
+  },
+  {
+    "datum": "22.11.2026",
+    "uhrzeit": "15:30",
+    "gegner": "1.FC Saarbrücken-TT",
+    "ort": "auswärts",
+    "heimspiel": false
+  },
+  {
+    "datum": "13.12.2026",
+    "uhrzeit": "17:30",
+    "gegner": "TTC RhönSprudel Fulda-Maberzell",
+    "ort": "auswärts",
+    "heimspiel": false
   },
   {
     "datum": "20.12.2026",
     "uhrzeit": "14:00",
     "gegner": "TTF Liebherr Ochsenhausen",
-    "ort": "Ort noch offen"
+    "ort": "Ort noch offen",
+    "heimspiel": true
   }
 ]

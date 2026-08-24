@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Borussia Düsseldorf – Heimspielkalender TTBL</title>
+  <title>Borussia Düsseldorf – Spielkalender TTBL</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -12,14 +12,14 @@
       <div class="logo-badge">BD</div>
       <div class="header-text">
         <h1>Borussia Düsseldorf</h1>
-        <p>Heimspiele · Tischtennis-Bundesliga</p>
+        <p>Spielplan · Tischtennis-Bundesliga</p>
       </div>
     </div>
   </header>
 
   <main>
     <section class="countdown-section" aria-live="polite">
-      <h2 id="countdown-title">Nächstes Heimspiel</h2>
+      <h2 id="countdown-title">Nächstes Spiel</h2>
       <div id="countdown" class="countdown">
         <div class="countdown-box">
           <span class="countdown-value" id="cd-days">--</span>
@@ -42,7 +42,11 @@
     </section>
 
     <section class="games-section">
-      <h2>Alle Heimspiele</h2>
+      <h2>Alle Spiele</h2>
+      <ul class="legend">
+        <li><span class="legend-swatch legend-home"></span> Heimspiel</li>
+        <li><span class="legend-swatch legend-away"></span> Auswärtsspiel</li>
+      </ul>
       <div id="games-list" class="games-list"></div>
     </section>
   </main>

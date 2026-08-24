@@ -35,13 +35,17 @@ function renderGames(games) {
 
   games.forEach((game) => {
     const card = document.createElement("div");
-    card.className = "game-card";
+    card.className = `game-card ${game.heimspiel ? "is-home" : "is-away"}`;
     if (nextGame && game === nextGame) card.classList.add("is-next");
     if (game.dateObj < now) card.classList.add("is-past");
 
     const day = String(game.dateObj.getDate()).padStart(2, "0");
     const month = MONTH_NAMES[game.dateObj.getMonth()];
     const weekday = WEEKDAY_NAMES[game.dateObj.getDay()];
+    const matchup = game.heimspiel
+      ? `Borussia Düsseldorf – ${game.gegner}`
+      : `${game.gegner} – Borussia Düsseldorf`;
+    const typeLabel = game.heimspiel ? "Heim" : "Auswärts";
 
     card.innerHTML = `
       <div class="game-date">
@@ -49,8 +53,9 @@ function renderGames(games) {
         <span class="month">${month}</span>
       </div>
       <div class="game-details">
-        <p class="game-opponent">Borussia Düsseldorf – ${game.gegner}</p>
+        <p class="game-opponent">${matchup}</p>
         <p class="game-meta">
+          <span class="type-badge">${typeLabel}</span>
           <span>${weekday}, ${game.datum}</span>
           <span>${game.uhrzeit} Uhr</span>
           <span>${game.ort}</span>
@@ -80,7 +85,7 @@ function updateCountdown(games) {
     hoursEl.textContent = "--";
     minutesEl.textContent = "--";
     secondsEl.textContent = "--";
-    infoEl.textContent = "Aktuell sind keine weiteren Heimspiele geplant.";
+    infoEl.textContent = "Aktuell sind keine weiteren Spiele geplant.";
     return;
   }
 
