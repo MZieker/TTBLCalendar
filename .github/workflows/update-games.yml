@@ -29,14 +29,17 @@ jobs:
       - name: Fetch latest table
         run: python scripts/fetch_table.py
 
-      - name: Commit and push changes if games.json or table.json changed
+      - name: Generate PDF schedule
+        run: python scripts/generate_pdf.py
+
+      - name: Commit and push changes if games.json, table.json or spielplan.pdf changed
         run: |
-          if git diff --quiet -- games.json table.json; then
-            echo "Keine Aenderungen an games.json oder table.json."
+          if git diff --quiet -- games.json table.json spielplan.pdf; then
+            echo "Keine Aenderungen an games.json, table.json oder spielplan.pdf."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add games.json table.json
+          git add games.json table.json spielplan.pdf
           git commit -m "chore: update TTBL games and table"
           git push
