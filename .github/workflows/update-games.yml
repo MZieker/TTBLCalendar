@@ -34,12 +34,12 @@ jobs:
 
       - name: Commit and push changes if games.json, table.json or spielplan.pdf changed
         run: |
-          if git diff --quiet -- games.json table.json spielplan.pdf; then
+          git add games.json table.json spielplan.pdf
+          if git diff --cached --quiet; then
             echo "Keine Aenderungen an games.json, table.json oder spielplan.pdf."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add games.json table.json spielplan.pdf
           git commit -m "chore: update TTBL games and table"
           git push
