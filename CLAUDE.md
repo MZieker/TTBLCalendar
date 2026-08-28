@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-A static, no-build fan site that displays Borussia Düsseldorf's TTBL (Tischtennis-Bundesliga) schedule and league table. Plain HTML/CSS/JS — no framework, no bundler, no package.json. Two Python scripts scrape the data into JSON files that the frontend fetches at runtime; a GitHub Actions workflow keeps those JSON files up to date automatically.
+A static, no-build fan site that displays Borussia Düsseldorf's TTBL (Tischtennis-Bundesliga) schedule and league table. Plain HTML/CSS/JS — no framework, no bundler, no package.json. Two Python scripts scrape the data into JSON files that the frontend fetches at runtime; a third script renders the schedule as a downloadable PDF; a GitHub Actions workflow keeps games.json, table.json and spielplan.pdf up to date automatically.
 
 ## Commands
 
@@ -20,23 +20,30 @@ pip install -r scripts/requirements.txt
 # Re-scrape schedule / table data
 python scripts/fetch_games.py
 python scripts/fetch_table.py
+
+# Regenerate the downloadable PDF schedule from games.json
+python scripts/generate_pdf.py
 ```
 
 Opening `index.html` directly via `file://` breaks the page: `fetch("games.json")` / `fetch("table.json")` are blocked by CORS under the `file://` origin, so both sections silently fail to render. Always test through a local HTTP server.
 
 ## Architecture
 
-**Data flow:** the two Python scrapers are the source of truth generators; the frontend never talks to any live API.
+**Data flow:** the two Python scrapers are the source of truth generators; the frontend never talks to any live API. `generate_pdf.py` derives a downloadable PDF from the scraped `games.json`.
 
 ```
 scripts/fetch_games.py  --> games.json  --\
-scripts/fetch_table.py  --> table.json  ---> script.js (fetch) --> DOM
+                                            +--> script.js (fetch) --> DOM
+scripts/fetch_table.py  --> table.json  --/
+
+games.json --> scripts/generate_pdf.py --> spielplan.pdf --> index.html (download link)
 ```
 
 - `scripts/fetch_games.py` scrapes `https://www.borussia-duesseldorf.com/profis/spielplan` (one `<table class="ce-table">` under the "Bundesliga" heading). It captures **both** home and away fixtures — a row is a home game when `TEAM_NAME` appears in the "Heim" column, away when it appears in "Gast" — and tags each with `"heimspiel": true/false`. Games whose date is before today are filtered out, so `games.json` only ever contains upcoming fixtures. Venue is the hall name for home games and the literal string `"auswärts"` for away games.
 - `scripts/fetch_table.py` scrapes `https://www.ttbl.de/bundesliga/table/2026-2027/1`, which contains exactly one `<table>` (columns: Rang, Team, Beg., S, N, Spiele, +/-, Punkte). Team name is read from the `<a title="...">` attribute (more reliable than the visible, viewport-dependent text). `punkte` is the team's own point total (first number of the site's `"2 : 0"` pair); `satzdifferenz` maps to the site's `+/-` column, which is technically a *Spieldifferenz* (games won/lost), not a literal Sätze count — the closest available stat.
-- Both scripts write pretty-printed, UTF-8 JSON sorted appropriately (`games.json` by date, `table.json` by `platz`) and overwrite their output file directly — no diffing logic in the scripts themselves.
-- `.github/workflows/update-games.yml` runs both scrapers daily (`cron: "0 5 * * *"`, plus manual `workflow_dispatch`), then commits+pushes `games.json`/`table.json` as `github-actions[bot]` only if `git diff` shows changes.
+- `scripts/generate_pdf.py` reads `games.json`, re-filters for upcoming fixtures (its own `is_upcoming()` check, independent of the filtering already done by `fetch_games.py`), and renders them via `reportlab` into `spielplan.pdf` (A4, club red/white color scheme, one row per game with a Heim/Auswärts badge). It has no network dependency — it only ever needs `games.json` to already exist.
+- Both scraper scripts write pretty-printed, UTF-8 JSON sorted appropriately (`games.json` by date, `table.json` by `platz`) and overwrite their output file directly — no diffing logic in the scripts themselves.
+- `.github/workflows/update-games.yml` runs both scrapers daily (`cron: "0 5 * * *"`, plus manual `workflow_dispatch`), then `generate_pdf.py`, then commits+pushes `games.json`/`table.json`/`spielplan.pdf` as `github-actions[bot]` only if `git diff` shows changes.
 
 **Frontend (`script.js`):** two independent `init*()` entry points (`initGames()`, `initTable()`) run at the bottom of the file, each with its own try/catch so a failure in one section doesn't take down the other:
 
