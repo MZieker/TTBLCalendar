@@ -49,11 +49,24 @@ def parse_table(table) -> list[dict]:
         if len(cells) < 8:
             continue
 
-        rank_cell, team_cell, beg_cell, s_cell, n_cell, _spiele_cell, diff_cell, punkte_cell = cells[:8]
+        (
+            rank_cell,
+            team_cell,
+            beg_cell,
+            s_cell,
+            n_cell,
+            _spiele_cell,
+            diff_cell,
+            punkte_cell,
+        ) = cells[:8]
 
         platz = first_number(rank_cell.get_text(strip=True))
         team_link = team_cell.find("a")
-        name = team_link["title"].strip() if team_link and team_link.has_attr("title") else team_cell.get_text(strip=True)
+        name = (
+            team_link["title"].strip()
+            if team_link and team_link.has_attr("title")
+            else team_cell.get_text(strip=True)
+        )
 
         spiele = first_number(beg_cell.get_text(strip=True))
         siege = first_number(s_cell.get_text(strip=True))
@@ -91,7 +104,10 @@ def main() -> int:
 
     teams = sorted(parse_table(table), key=lambda team: team["platz"])
     if not teams:
-        print("Keine Tabellendaten gefunden, table.json wird nicht veraendert.", file=sys.stderr)
+        print(
+            "Keine Tabellendaten gefunden, table.json wird nicht veraendert.",
+            file=sys.stderr,
+        )
         return 1
 
     OUTPUT_PATH.write_text(

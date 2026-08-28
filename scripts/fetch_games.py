@@ -83,7 +83,9 @@ def parse_games(table) -> list[dict]:
         games.append(
             {
                 "datum": datum,
-                "uhrzeit": uhrzeit.strip() if TIME_PATTERN.match(uhrzeit.strip()) else "TBD",
+                "uhrzeit": (
+                    uhrzeit.strip() if TIME_PATTERN.match(uhrzeit.strip()) else "TBD"
+                ),
                 "gegner": gegner,
                 "ort": venue,
                 "heimspiel": heimspiel,
@@ -121,7 +123,10 @@ def main() -> int:
     games = [game for game in games if is_upcoming(game, today)]
 
     if not games:
-        print("Keine anstehenden Spiele gefunden, games.json wird nicht veraendert.", file=sys.stderr)
+        print(
+            "Keine anstehenden Spiele gefunden, games.json wird nicht veraendert.",
+            file=sys.stderr,
+        )
         return 1
 
     OUTPUT_PATH.write_text(

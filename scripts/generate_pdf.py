@@ -78,7 +78,9 @@ def build_table(games: list[dict]) -> Table:
             ]
         )
 
-    table = Table(rows, colWidths=[22 * mm, 18 * mm, 55 * mm, 45 * mm, 22 * mm], repeatRows=1)
+    table = Table(
+        rows, colWidths=[22 * mm, 18 * mm, 55 * mm, 45 * mm, 22 * mm], repeatRows=1
+    )
 
     style = [
         ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
@@ -138,7 +140,9 @@ def main() -> int:
         story.append(
             Paragraph(
                 "Aktuell sind keine anstehenden Spiele bekannt.",
-                ParagraphStyle("Empty", fontName="Helvetica", fontSize=11, textColor=BD_TEXT),
+                ParagraphStyle(
+                    "Empty", fontName="Helvetica", fontSize=11, textColor=BD_TEXT
+                ),
             )
         )
 
@@ -146,7 +150,9 @@ def main() -> int:
     story.append(
         Paragraph(
             f"Stand: {today.strftime('%d.%m.%Y')} · Inoffizielle Fan-Seite · Daten ohne Gewähr",
-            ParagraphStyle("Footer", fontName="Helvetica", fontSize=8, textColor=BD_TEXT_LIGHT),
+            ParagraphStyle(
+                "Footer", fontName="Helvetica", fontSize=8, textColor=BD_TEXT_LIGHT
+            ),
         )
     )
 
