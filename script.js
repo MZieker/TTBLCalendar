@@ -1,6 +1,7 @@
 const GAMES_DATA_URL = "games.json";
 const TABLE_DATA_URL = "table.json";
 const OWN_TEAM_NAME = "Borussia Düsseldorf";
+const THEME_STORAGE_KEY = "theme";
 
 const MONTH_NAMES = [
   "Jan", "Feb", "Mär", "Apr", "Mai", "Jun",
@@ -133,6 +134,59 @@ function updateCountdown(games) {
   infoEl.textContent = `gegen ${nextGame.gegner} am ${nextGame.datum} um ${nextGame.uhrzeit} Uhr · ${nextGame.ort}`;
 }
 
+function getStoredTheme() {
+  try {
+    return localStorage.getItem(THEME_STORAGE_KEY);
+  } catch (error) {
+    return null;
+  }
+}
+
+function storeTheme(theme) {
+  try {
+    localStorage.setItem(THEME_STORAGE_KEY, theme);
+  } catch (error) {
+    // localStorage nicht verfügbar – Einstellung gilt nur für diese Sitzung.
+  }
+}
+
+function applyTheme(theme) {
+  const isDark = theme === "dark";
+  const root = document.documentElement;
+
+  if (isDark) {
+    root.setAttribute("data-theme", "dark");
+  } else {
+    root.removeAttribute("data-theme");
+  }
+
+  const toggle = document.getElementById("theme-toggle");
+  if (!toggle) return;
+
+  toggle.setAttribute("aria-pressed", String(isDark));
+  const icon = toggle.querySelector(".theme-toggle-icon");
+  const text = toggle.querySelector(".theme-toggle-text");
+  if (icon) icon.textContent = isDark ? "☀️" : "🌙";
+  if (text) text.textContent = isDark ? "Light Mode" : "Dark Mode";
+}
+
+function initTheme() {
+  const prefersDark =
+    window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const currentTheme = getStoredTheme() || (prefersDark ? "dark" : "light");
+  applyTheme(currentTheme);
+
+  const toggle = document.getElementById("theme-toggle");
+  if (!toggle) return;
+
+  toggle.addEventListener("click", () => {
+    const nextTheme =
+      document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    applyTheme(nextTheme);
+    storeTheme(nextTheme);
+  });
+}
+
 async function initGames() {
   try {
     const games = await loadGames();
@@ -159,5 +213,6 @@ async function initTable() {
   }
 }
 
+initTheme();
 initGames();
 initTable();

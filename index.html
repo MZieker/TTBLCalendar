@@ -5,6 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Borussia Düsseldorf – Spielkalender TTBL</title>
   <link rel="stylesheet" href="style.css">
+  <script>
+    // Theme vor dem ersten Paint setzen, damit es nicht kurz aufblitzt.
+    (function () {
+      try {
+        var stored = localStorage.getItem("theme");
+        var prefersDark = window.matchMedia
+          && window.matchMedia("(prefers-color-scheme: dark)").matches;
+        if (stored === "dark" || (!stored && prefersDark)) {
+          document.documentElement.setAttribute("data-theme", "dark");
+        }
+      } catch (e) {
+        /* localStorage nicht verfügbar – Standard-Theme greift */
+      }
+    })();
+  </script>
 </head>
 <body>
   <header class="site-header">
@@ -14,6 +29,10 @@
         <h1>Borussia Düsseldorf</h1>
         <p>Spielplan · Tischtennis-Bundesliga</p>
       </div>
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="false" aria-label="Dark Mode umschalten">
+        <span class="theme-toggle-icon" aria-hidden="true">🌙</span>
+        <span class="theme-toggle-text">Dark Mode</span>
+      </button>
     </div>
   </header>
 
