@@ -33,5 +33,61 @@
     "gegner": "TTF Liebherr Ochsenhausen",
     "ort": "Hessenhalle, Alsfeld",
     "heimspiel": true
+  },
+  {
+    "datum": "05.01.2027",
+    "uhrzeit": "19:00",
+    "gegner": "TTC OE Bad Homburg",
+    "ort": "ARAG CenterCourt",
+    "heimspiel": true
+  },
+  {
+    "datum": "08.01.2027",
+    "uhrzeit": "19:30",
+    "gegner": "TTC Schwalbe Bergneustadt",
+    "ort": "auswärts",
+    "heimspiel": false
+  },
+  {
+    "datum": "16.01.2027",
+    "uhrzeit": "13:00",
+    "gegner": "TTC Rhöhnsprudel Fulda-Maberzell",
+    "ort": "CASTELLO Düsseldorf",
+    "heimspiel": true
+  },
+  {
+    "datum": "07.02.2027",
+    "uhrzeit": "14:00",
+    "gegner": "TTC Zugbrücke Grenzau",
+    "ort": "ARAG CenterCourt",
+    "heimspiel": true
+  },
+  {
+    "datum": "11.02.2027",
+    "uhrzeit": "18:00",
+    "gegner": "TTF Liebherr Ochsenhausen",
+    "ort": "auswärts",
+    "heimspiel": false
+  },
+  {
+    "datum": "14.02.2027",
+    "uhrzeit": "14:00",
+    "gegner": "1.FC Saarbrücken-TT",
+    "ort": "Kampa-Halle, Minden",
+    "heimspiel": true
+  },
+  {
+    "datum": "04.03.2027",
+    "uhrzeit": "19:00",
+    "gegner": "Post SV Mühlhausen",
+    "ort": "ARAG CenterCourt",
+    "heimspiel": true
+  },
+  {
+    "datum": "16.03.2027",
+    "uhrzeit": "18:30",
+    "gegner": "BV Borussia 09 Dortmund",
+    "ort": "auswärts",
+    "heimspiel": false
   }
 ]
