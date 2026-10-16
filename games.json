@@ -89,5 +89,26 @@
     "gegner": "BV Borussia 09 Dortmund",
     "ort": "auswärts",
     "heimspiel": false
+  },
+  {
+    "datum": "24.03.2027",
+    "uhrzeit": "19:00",
+    "gegner": "ASC Grünwettersbach",
+    "ort": "auswärts",
+    "heimspiel": false
+  },
+  {
+    "datum": "07.04.2027",
+    "uhrzeit": "19:00",
+    "gegner": "SV Werder Bremen",
+    "ort": "ARAG CenterCourt",
+    "heimspiel": true
+  },
+  {
+    "datum": "11.04.2027",
+    "uhrzeit": "14:00",
+    "gegner": "TSV Bad Königshofen",
+    "ort": "auswärts",
+    "heimspiel": false
   }
 ]
