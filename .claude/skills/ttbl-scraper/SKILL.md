@@ -36,7 +36,7 @@ def find_bundesliga_table(soup):
 
 ## Quelle 2: Tabelle (ttbl.de)
 
-**URL:** `https://www.ttbl.de/bundesliga/table/2026-2027/1` (Saison-Segment `2026-2027` im Pfad ändert sich pro Saison)
+**URL:** `https://www.ttbl.de/bundesliga/table` — leitet per Redirect auf die aktuelle Saison und den aktuellen Spieltag weiter (z. B. `/table/2026-2027/9`). Keine `/<saison>/<n>`-Segmente fest eintragen: ein Spieltag-Segment friert die Tabelle auf Spieltag n ein, ein Saison-Segment muss jede Saison manuell angepasst werden.
 
 **Struktur:** Die Seite ist eine Next.js-App; sie enthält aber zuverlässig **genau eine** `<table>` im gesamten HTML (verifiziert per `grep -c "<table"` gegen die Live-Seite). `soup.find("table")` reicht daher aus, kein spezifischer Selektor nötig.
 
@@ -90,7 +90,7 @@ Beide Dateien: UTF-8, `json.dumps(..., ensure_ascii=False, indent=2)` + abschlie
 2. **Nicht erreichbare Seite:** `response.raise_for_status()` direkt nach dem `requests.get()` — bei HTTP-Fehlern (4xx/5xx) oder Timeout (`timeout=20`) bricht das Skript mit einer Exception ab (nicht abgefangen), was im GitHub-Actions-Workflow den Job als fehlgeschlagen markiert. Auch hier bleibt die vorherige `games.json`/`table.json` im Repo unverändert, da der Commit-Schritt nie erreicht wird.
 3. **Vergangene Spiele herausfiltern:** Nur `fetch_games.py` filtert; passiert **nach** dem Sortieren, über `is_upcoming(game, date.today())` — Vergleich ist rein datumsbasiert (nicht datetime-genau), ein Spiel am heutigen Tag bleibt also auch dann in `games.json`, wenn die Startzeit an diesem Tag schon vorbei ist. `fetch_table.py` filtert nichts, da eine Tabelle immer den Gesamtstand zeigt.
 4. **User-Agent:** Beide Skripte senden einen expliziten `User-Agent`-Header (`REQUEST_HEADERS`), da manche Seiten Requests ohne Browser-artigen UA blockieren oder anders ausliefern.
-5. **Saison-Rollover:** Die TTBL-Tabellen-URL enthält die Saison im Pfad (`/table/2026-2027/1`). Beim Saisonwechsel muss `TABLE_URL` in `fetch_table.py` manuell aktualisiert werden — das Skript erkennt das nicht automatisch.
+5. **Saison-Rollover / Spieltag:** `TABLE_URL` ist bewusst `https://www.ttbl.de/bundesliga/table` ohne Saison und Spieltag; die TTBL-Seite leitet selbst auf den aktuellen Stand weiter (`requests` folgt dem Redirect automatisch). Früher stand dort `/table/2026-2027/1` — das `/1` ist der Spieltag, und die Tabelle blieb monatelang auf dem Stand nach Spieltag 1 stehen. In der Sommerpause zeigt die Weiterleitung evtl. noch die alte oder eine leere neue Saison.
 
 ## Wann dieses Skill anwenden
 

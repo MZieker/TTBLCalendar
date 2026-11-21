@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Scrapt die aktuelle TTBL-Tabelle und schreibt sie nach table.json.
 
-Quelle: https://www.ttbl.de/bundesliga/table/2026-2027/1
+Quelle: https://www.ttbl.de/bundesliga/table (leitet auf die aktuelle Saison weiter)
+Ohne Saison-/Spieltag-Segment liefert die Seite immer die aktuelle Tabelle; ein
+angehaengtes "/<n>" wuerde die Tabelle nach Spieltag n einfrieren.
 Die Seite enthaelt genau eine <table> mit den Spalten Rang, Team, Beg.
 (Begegnungen), S (Siege), N (Niederlagen), Spiele (gewonnene : verlorene
 Einzelspiele), +/- (Differenz aus der Spiele-Spalte) und Punkte (eigene :
@@ -20,7 +22,7 @@ from pathlib import Path
 import requests
 from bs4 import BeautifulSoup
 
-TABLE_URL = "https://www.ttbl.de/bundesliga/table/2026-2027/1"
+TABLE_URL = "https://www.ttbl.de/bundesliga/table"
 OUTPUT_PATH = Path(__file__).resolve().parent.parent / "table.json"
 REQUEST_HEADERS = {
     "User-Agent": "Mozilla/5.0 (compatible; TTBLCalendarBot/1.0; +https://github.com/)"
