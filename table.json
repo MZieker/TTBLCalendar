@@ -2,29 +2,29 @@
   {
     "platz": 1,
     "name": "Borussia Düsseldorf",
-    "spiele": 8,
-    "siege": 8,
+    "spiele": 9,
+    "siege": 9,
     "niederlagen": 0,
-    "punkte": 16,
-    "satzdifferenz": 19
+    "punkte": 18,
+    "satzdifferenz": 21
   },
   {
     "platz": 2,
-    "name": "1. FC Saarbrücken-TT",
-    "spiele": 8,
-    "siege": 6,
-    "niederlagen": 2,
-    "punkte": 12,
-    "satzdifferenz": 8
-  },
-  {
-    "platz": 3,
     "name": "TTF Liebherr Ochsenhausen",
     "spiele": 8,
     "siege": 6,
     "niederlagen": 2,
     "punkte": 12,
     "satzdifferenz": 7
+  },
+  {
+    "platz": 3,
+    "name": "1. FC Saarbrücken-TT",
+    "spiele": 9,
+    "siege": 6,
+    "niederlagen": 3,
+    "punkte": 12,
+    "satzdifferenz": 6
   },
   {
     "platz": 4,
@@ -64,47 +64,47 @@
   },
   {
     "platz": 8,
-    "name": "TTC Zugbrücke Grenzau",
-    "spiele": 8,
+    "name": "TTC RhönSprudel Fulda-Maberzell",
+    "spiele": 9,
     "siege": 3,
-    "niederlagen": 5,
+    "niederlagen": 6,
     "punkte": 6,
-    "satzdifferenz": -6
+    "satzdifferenz": -1
   },
   {
     "platz": 9,
-    "name": "TTC RhönSprudel Fulda-Maberzell",
-    "spiele": 8,
-    "siege": 2,
+    "name": "TTC Schwalbe Bergneustadt",
+    "spiele": 9,
+    "siege": 3,
     "niederlagen": 6,
-    "punkte": 4,
-    "satzdifferenz": -4
+    "punkte": 6,
+    "satzdifferenz": -3
   },
   {
     "platz": 10,
-    "name": "TTC Schwalbe Bergneustadt",
-    "spiele": 8,
-    "siege": 2,
+    "name": "TTC Zugbrücke Grenzau",
+    "spiele": 9,
+    "siege": 3,
     "niederlagen": 6,
-    "punkte": 4,
-    "satzdifferenz": -5
+    "punkte": 6,
+    "satzdifferenz": -8
   },
   {
     "platz": 11,
-    "name": "ASC Grünwettersbach",
-    "spiele": 8,
-    "siege": 2,
-    "niederlagen": 6,
-    "punkte": 4,
-    "satzdifferenz": -10
-  },
-  {
-    "platz": 12,
     "name": "TSV Bad Königshofen",
     "spiele": 9,
     "siege": 2,
     "niederlagen": 7,
     "punkte": 4,
     "satzdifferenz": -9
+  },
+  {
+    "platz": 12,
+    "name": "ASC Grünwettersbach",
+    "spiele": 9,
+    "siege": 2,
+    "niederlagen": 7,
+    "punkte": 4,
+    "satzdifferenz": -13
   }
 ]
