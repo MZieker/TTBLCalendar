@@ -10,15 +10,6 @@
   },
   {
     "platz": 2,
-    "name": "TTF Liebherr Ochsenhausen",
-    "spiele": 8,
-    "siege": 6,
-    "niederlagen": 2,
-    "punkte": 12,
-    "satzdifferenz": 7
-  },
-  {
-    "platz": 3,
     "name": "1. FC Saarbrücken-TT",
     "spiele": 9,
     "siege": 6,
@@ -27,16 +18,34 @@
     "satzdifferenz": 6
   },
   {
-    "platz": 4,
+    "platz": 3,
     "name": "SV Werder Bremen",
-    "spiele": 8,
-    "siege": 5,
+    "spiele": 9,
+    "siege": 6,
     "niederlagen": 3,
-    "punkte": 10,
-    "satzdifferenz": 2
+    "punkte": 12,
+    "satzdifferenz": 5
+  },
+  {
+    "platz": 4,
+    "name": "TTF Liebherr Ochsenhausen",
+    "spiele": 9,
+    "siege": 6,
+    "niederlagen": 3,
+    "punkte": 12,
+    "satzdifferenz": 4
   },
   {
     "platz": 5,
+    "name": "Post SV Mühlhausen",
+    "spiele": 9,
+    "siege": 5,
+    "niederlagen": 4,
+    "punkte": 10,
+    "satzdifferenz": 0
+  },
+  {
+    "platz": 6,
     "name": "TTC OE Clarity-Tel.Syst.Bad Homburg",
     "spiele": 9,
     "siege": 5,
@@ -45,20 +54,11 @@
     "satzdifferenz": -1
   },
   {
-    "platz": 6,
-    "name": "BV Borussia 09 Dortmund",
-    "spiele": 8,
-    "siege": 4,
-    "niederlagen": 4,
-    "punkte": 8,
-    "satzdifferenz": 0
-  },
-  {
     "platz": 7,
-    "name": "Post SV Mühlhausen",
-    "spiele": 8,
+    "name": "BV Borussia 09 Dortmund",
+    "spiele": 9,
     "siege": 4,
-    "niederlagen": 4,
+    "niederlagen": 5,
     "punkte": 8,
     "satzdifferenz": -1
   },
